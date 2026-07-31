@@ -3,7 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elementor Typography Converter</title>
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Elementor Typography Converter | PX to REM & Line-Height EM Calculator</title>
+  <meta name="title" content="Elementor Typography Converter | PX to REM & Line-Height EM Calculator">
+  <meta name="description" content="Free responsive typography converter for Elementor & web designers. Convert PX to REM font sizes and PX/% to EM line-height ratios across Desktop, Laptop, Tablet, and Mobile breakpoints instantly.">
+  <meta name="keywords" content="elementor typography converter, px to rem calculator, line height em converter, elementor global typography, responsive font calculator">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Kid">
+
+  <!-- Open Graph / Facebook / Messenger Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Elementor Typography Converter | Responsive PX to REM Tool">
+  <meta property="og:description" content="Convert desktop font sizes to REM and line-height specs to EM ratio across Desktop, Laptop, Tablet, and Mobile breakpoints. Built for Elementor Global Typography.">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Elementor Typography Converter">
+  <meta name="twitter:description" content="Instant PX to REM & Line-Height EM converter for Elementor designers.">
+
+  <!-- Schema.org JSON-LD for Google Rich Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Elementor Typography Converter",
+    "operatingSystem": "All",
+    "applicationCategory": "DeveloperApplication",
+    "description": "A web-based typography utility tool that converts PX to REM and Line-Height to EM across multiple breakpoints for Elementor.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,13 +46,13 @@
 <div class="container">
   <header>
     <h1>Elementor Global Typography Converter</h1>
-    <p>Convert Desktop specs to REM & EM across all breakpoints instantly.</p>
+    <p>Convert Desktop PX specs to REM & EM across all responsive breakpoints instantly.</p>
   </header>
 
   <!-- FONT SIZE SECTION -->
-  <div class="card">
+  <section class="card">
     <div class="card-title">
-      <span>1. Font Size Converter (PX &rarr; REM)</span>
+      <h2>1. Font Size Converter (PX &rarr; REM)</h2>
     </div>
 
     <div class="presets">
@@ -59,12 +94,12 @@
         <!-- JS Populated -->
       </tbody>
     </table>
-  </div>
+  </section>
 
   <!-- LINE HEIGHT SECTION -->
-  <div class="card">
+  <section class="card">
     <div class="card-title">
-      <span>2. Line Height Converter (PX / % &rarr; EM)</span>
+      <h2>2. Line Height Converter (PX / % &rarr; EM)</h2>
       <div class="unit-toggle">
         <button id="lhUnitPx" class="active" onclick="setLhUnit('px')">PX Mode</button>
         <button id="lhUnitPct" onclick="setLhUnit('%')">% Mode</button>
@@ -101,7 +136,13 @@
         <!-- JS Populated -->
       </tbody>
     </table>
-  </div>
+  </section>
+
+  <!-- SEO CONTENT SECTION FOR GOOGLE INDEXING -->
+  <section class="card seo-content" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+    <h3 style="color: var(--text-main); margin-bottom: 0.5rem; font-size: 1rem;">Why Use This Elementor Typography Converter?</h3>
+    <p style="margin-bottom: 0.75rem;">Designing responsive websites in Elementor requires converting pixel design specs (from Figma or Canva) into relative units like <strong>REM</strong> for font sizes and <strong>EM/unitless ratios</strong> for line heights. This utility automates responsive scaling across Desktop (1920px), Laptop (1440px), Tablet (1024px), and Mobile (767px) with 1-click copy functionality.</p>
+  </section>
 </div>
 
 <script src="script.js"></script>
