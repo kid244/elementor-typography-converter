@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elementor Typography Converter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Elementor Global Typography Converter</h1>
+    <p>Convert Desktop specs to REM & EM across all breakpoints instantly.</p>
+  </header>
+
+  <!-- FONT SIZE SECTION -->
+  <div class="card">
+    <div class="card-title">
+      <span>1. Font Size Converter (PX &rarr; REM)</span>
+    </div>
+
+    <div class="presets">
+      <span class="preset-label">Presets:</span>
+      <button class="preset-chip" onclick="setPx(80)">H1 (80px)</button>
+      <button class="preset-chip" onclick="setPx(64)">H2 (64px)</button>
+      <button class="preset-chip" onclick="setPx(48)">H3 (48px)</button>
+      <button class="preset-chip" onclick="setPx(32)">H4 (32px)</button>
+      <button class="preset-chip" onclick="setPx(16)">Body (16px)</button>
+    </div>
+
+    <div class="input-grid">
+      <div class="form-group">
+        <label for="basePx">Base Root Size (Browser Default)</label>
+        <div class="input-wrapper">
+          <input type="number" id="basePx" value="16" oninput="calculate()">
+          <span class="unit">px</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="desktopPx">Desktop Target Font Size</label>
+        <div class="input-wrapper">
+          <input type="number" id="desktopPx" value="80" oninput="calculate()">
+          <span class="unit">px</span>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Breakpoint</th>
+          <th>Screen Width</th>
+          <th>Calculated PX</th>
+          <th>Elementor REM Output</th>
+        </tr>
+      </thead>
+      <tbody id="fontSizeTable">
+        <!-- JS Populated -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LINE HEIGHT SECTION -->
+  <div class="card">
+    <div class="card-title">
+      <span>2. Line Height Converter (PX / % &rarr; EM)</span>
+      <div class="unit-toggle">
+        <button id="lhUnitPx" class="active" onclick="setLhUnit('px')">PX Mode</button>
+        <button id="lhUnitPct" onclick="setLhUnit('%')">% Mode</button>
+      </div>
+    </div>
+
+    <div class="input-grid">
+      <div class="form-group">
+        <label for="lhFontPx">Font Size (PX)</label>
+        <div class="input-wrapper">
+          <input type="number" id="lhFontPx" value="80" oninput="calculate()">
+          <span class="unit">px</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lhInputVal" id="lhInputLabel">Line Height Value (PX)</label>
+        <div class="input-wrapper">
+          <input type="number" id="lhInputVal" value="96" oninput="calculate()">
+          <span class="unit" id="lhInputUnit">px</span>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Breakpoint</th>
+          <th>Font Size</th>
+          <th>Line Height Spec</th>
+          <th>Elementor EM Output</th>
+        </tr>
+      </thead>
+      <tbody id="lineHeightTable">
+        <!-- JS Populated -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
