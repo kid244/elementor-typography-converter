@@ -1,112 +1,117 @@
-let currentLhUnit = 'px';
-
-const breakpoints = [
+// Base Root Size & Ratios for Font Scaling
+const BREAKPOINTS = [
   { name: 'Desktop', width: '1920px', scale: 1.0 },
   { name: 'Laptop', width: '1440px', scale: 0.875 },
   { name: 'Tablet', width: '1024px', scale: 0.75 },
   { name: 'Mobile', width: '767px', scale: 0.625 }
 ];
 
+const MIN_FONT_PX = 18; // Minimum threshold limit
+
+let lhUnit = 'px';
+
 function setPx(val) {
   document.getElementById('desktopPx').value = val;
-  document.getElementById('lhFontPx').value = val;
-  if(currentLhUnit === 'px') {
-    document.getElementById('lhInputVal').value = Math.round(val * 1.2);
-  }
   calculate();
 }
 
 function setLhUnit(unit) {
-  currentLhUnit = unit;
+  lhUnit = unit;
   document.getElementById('lhUnitPx').classList.toggle('active', unit === 'px');
   document.getElementById('lhUnitPct').classList.toggle('active', unit === '%');
   
   const label = document.getElementById('lhInputLabel');
   const unitSpan = document.getElementById('lhInputUnit');
-  const inputVal = document.getElementById('lhInputVal');
-
-  if(unit === '%') {
-    label.textContent = 'Line Height Value (%)';
-    unitSpan.textContent = '%';
-    inputVal.value = '120';
+  
+  if (unit === 'px') {
+    label.innerText = 'Line Height Value (PX)';
+    unitSpan.innerText = 'px';
   } else {
-    label.textContent = 'Line Height Value (PX)';
-    unitSpan.textContent = 'px';
-    const fontPx = parseFloat(document.getElementById('lhFontPx').value) || 16;
-    inputVal.value = Math.round(fontPx * 1.2);
+    label.innerText = 'Line Height Percentage (%)';
+    unitSpan.innerText = '%';
   }
+  
   calculate();
-}
-
-function copyText(text, btn) {
-  navigator.clipboard.writeText(text);
-  const originalText = btn.textContent;
-  btn.textContent = 'Copied!';
-  btn.classList.add('copied');
-  setTimeout(() => {
-    btn.textContent = originalText;
-    btn.classList.remove('copied');
-  }, 1200);
 }
 
 function calculate() {
   const basePx = parseFloat(document.getElementById('basePx').value) || 16;
   const desktopPx = parseFloat(document.getElementById('desktopPx').value) || 0;
+  
   const lhFontPx = parseFloat(document.getElementById('lhFontPx').value) || 0;
   const lhInputVal = parseFloat(document.getElementById('lhInputVal').value) || 0;
 
-  // 1. Render Font Size Table
-  const fsTable = document.getElementById('fontSizeTable');
-  fsTable.innerHTML = '';
-  
-  breakpoints.forEach(bp => {
-    const targetPx = Math.round(desktopPx * bp.scale * 10) / 10;
-    const remVal = (targetPx / basePx).toFixed(3).replace(/\.?0+$/, '');
+  // 1. Calculate Font Sizes (with 18px minimum limit)
+  const fontTable = document.getElementById('fontSizeTable');
+  fontTable.innerHTML = '';
+
+  BREAKPOINTS.forEach(bp => {
+    let rawPx = desktopPx * bp.scale;
     
+    // Apply 18px minimum threshold limit
+    let finalPx = Math.max(rawPx, MIN_FONT_PX);
+    let remVal = (finalPx / basePx).toFixed(3);
+    
+    // Clean up trailing zeros (e.g. 1.125rem)
+    remVal = parseFloat(remVal);
+
+    const isClamped = rawPx < MIN_FONT_PX && desktopPx > 0;
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${bp.name}</strong></td>
-      <td style="color:var(--text-muted);">${bp.width}</td>
-      <td>${targetPx}px</td>
+      <td>${bp.width}</td>
+      <td>${finalPx.toFixed(1).replace('.0', '')}px ${isClamped ? '<small style="color:#f59e0b;">(Min 18px applied)</small>' : ''}</td>
       <td>
-        <span class="val-highlight">${remVal}rem</span>
-        <button class="copy-btn" onclick="copyText('${remVal}', this)">Copy</button>
+        <span class="code-badge">${remVal}rem</span>
+        <button class="copy-btn" onclick="copyToClipboard('${remVal}rem', this)">Copy</button>
       </td>
     `;
-    fsTable.appendChild(tr);
+    fontTable.appendChild(tr);
   });
 
-  // 2. Render Line Height Table
+  // 2. Calculate Line Height EM Output
   const lhTable = document.getElementById('lineHeightTable');
   lhTable.innerHTML = '';
 
-  breakpoints.forEach(bp => {
-    const currentFont = Math.round(lhFontPx * bp.scale * 10) / 10;
-    let emVal = 1.2;
-    let specText = '';
+  BREAKPOINTS.forEach(bp => {
+    let calculatedFontPx = Math.max(lhFontPx * bp.scale, MIN_FONT_PX);
+    let targetLhPx = 0;
 
-    if (currentLhUnit === '%') {
-      emVal = (lhInputVal / 100).toFixed(3).replace(/\.?0+$/, '');
-      specText = `${lhInputVal}%`;
+    if (lhUnit === 'px') {
+      targetLhPx = lhInputVal * bp.scale;
     } else {
-      const currentLhPx = Math.round(lhInputVal * bp.scale * 10) / 10;
-      emVal = currentFont > 0 ? (currentLhPx / currentFont).toFixed(3).replace(/\.?0+$/, '') : '1';
-      specText = `${currentLhPx}px`;
+      targetLhPx = calculatedFontPx * (lhInputVal / 100);
     }
+
+    let emVal = calculatedFontPx > 0 ? (targetLhPx / calculatedFontPx).toFixed(2) : 0;
+    emVal = parseFloat(emVal);
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${bp.name}</strong></td>
-      <td style="color:var(--text-muted);">${currentFont}px</td>
-      <td>${specText}</td>
+      <td>${calculatedFontPx.toFixed(1).replace('.0', '')}px</td>
+      <td>${targetLhPx.toFixed(1).replace('.0', '')}px</td>
       <td>
-        <span class="val-highlight">${emVal}em</span>
-        <button class="copy-btn" onclick="copyText('${emVal}', this)">Copy</button>
+        <span class="code-badge">${emVal}em</span>
+        <button class="copy-btn" onclick="copyToClipboard('${emVal}em', this)">Copy</button>
       </td>
     `;
     lhTable.appendChild(tr);
   });
 }
 
-// Run initial calculation on page load
-calculate();
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.innerText;
+    btn.innerText = 'Copied!';
+    btn.style.background = '#10b981';
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.background = '';
+    }, 1200);
+  });
+}
+
+// Initial Calculation
+document.addEventListener('DOMContentLoaded', calculate);
