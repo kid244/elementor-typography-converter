@@ -52,7 +52,7 @@ function calculate() {
     let finalPx = Math.max(rawPx, MIN_FONT_PX);
     let remVal = (finalPx / basePx).toFixed(3);
     
-    // Clean up trailing zeros (e.g. 1.125rem)
+    // Clean up trailing zeros
     remVal = parseFloat(remVal);
 
     const isClamped = rawPx < MIN_FONT_PX && desktopPx > 0;
@@ -63,14 +63,14 @@ function calculate() {
       <td>${bp.width}</td>
       <td>${finalPx.toFixed(1).replace('.0', '')}px ${isClamped ? '<small style="color:#f59e0b;">(Min 18px applied)</small>' : ''}</td>
       <td>
-        <span class="code-badge">${remVal}rem</span>
+        <span class="code-badge">${remVal}</span>
         <button class="copy-btn" onclick="copyToClipboard('${remVal}', this)">Copy</button>
       </td>
     `;
     fontTable.appendChild(tr);
   });
 
-  // 2. Calculate Line Height EM Output
+  // 2. Calculate Line Height Output
   const lhTable = document.getElementById('lineHeightTable');
   lhTable.innerHTML = '';
 
@@ -93,7 +93,7 @@ function calculate() {
       <td>${calculatedFontPx.toFixed(1).replace('.0', '')}px</td>
       <td>${targetLhPx.toFixed(1).replace('.0', '')}px</td>
       <td>
-        <span class="code-badge">${emVal}em</span>
+        <span class="code-badge">${emVal}</span>
         <button class="copy-btn" onclick="copyToClipboard('${emVal}', this)">Copy</button>
       </td>
     `;
