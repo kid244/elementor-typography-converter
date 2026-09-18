@@ -64,7 +64,7 @@ function calculate() {
       <td>${finalPx.toFixed(1).replace('.0', '')}px ${isClamped ? '<small style="color:#f59e0b;">(Min 18px applied)</small>' : ''}</td>
       <td>
         <span class="code-badge">${remVal}rem</span>
-        <button class="copy-btn" onclick="copyToClipboard('${remVal}rem', this)">Copy</button>
+        <button class="copy-btn" onclick="copyToClipboard('${remVal}', this)">Copy</button>
       </td>
     `;
     fontTable.appendChild(tr);
@@ -94,7 +94,7 @@ function calculate() {
       <td>${targetLhPx.toFixed(1).replace('.0', '')}px</td>
       <td>
         <span class="code-badge">${emVal}em</span>
-        <button class="copy-btn" onclick="copyToClipboard('${emVal}em', this)">Copy</button>
+        <button class="copy-btn" onclick="copyToClipboard('${emVal}', this)">Copy</button>
       </td>
     `;
     lhTable.appendChild(tr);
